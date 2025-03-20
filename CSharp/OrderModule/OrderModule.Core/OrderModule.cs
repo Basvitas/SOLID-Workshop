@@ -4,6 +4,11 @@ namespace OrderModule.Core;
 
 public class OrderModule
 {
+    private INotifier _notifier;
+    public OrderModule(INotifier notifier)
+    {
+        _notifier = notifier;
+    }
     public void Order(HardwareType type, int number)
     {
         // Validation
@@ -38,18 +43,7 @@ public class OrderModule
         }
         
         // Compose and send email
-        var address = "itbusiness@example.com";
-        var orderDetails = $"{number} of {type}";
-        var invoiceDetails = $"Customer email: {address}\nDetails: {orderDetails}\nPrice: {price}";
-        var email = new Email()
-        {
-            To = address,
-            From = "Ordermodule@example.com",
-            Header = $"Invoice {type}",
-            Body = invoiceDetails,
-        };
-        Emailer.SendEmail(email);
-        
-        Console.WriteLine("Order processed");
+        _notifier.send_email(type, number, price);
     }
+
 }

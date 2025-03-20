@@ -1,4 +1,6 @@
-var orderModule = new OrderModule.Core.OrderModule();
+using OrderModule.Core;
+
+var orderModule = new OrderModule.Core.OrderModule(new Notifier());
 
 orderModule.Order(HardwareType.Laptop, 3);
 orderModule.Order(HardwareType.Monitor, 6);
